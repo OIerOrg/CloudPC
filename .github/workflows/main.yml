@@ -24,4 +24,5 @@ jobs:
       - name: Start Cpolar
         run: |
           Start-Process -NoNewWindow -FilePath "C:\cpolar\cpolar.exe" -ArgumentList "tcp 3389"
+          sleep 1000
         shell: powershell
