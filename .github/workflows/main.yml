@@ -16,6 +16,7 @@ jobs:
 
       - name: Install Cpolar
         run: |
+          whoami
           Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\' -Name "fDenyTSConnections" -Value 0
           Write-Host "Configuring firewall to allow Remote Desktop..."
           Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
