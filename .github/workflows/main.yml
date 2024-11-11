@@ -1,6 +1,5 @@
 name: Setup Cpolar on Windows
 
-# 触发条件，可以根据需要调整
 on:
   push:
     branches:
@@ -8,58 +7,21 @@ on:
   workflow_dispatch:
 
 jobs:
-  install-cpolar:
+  setup-cpolar:
     runs-on: windows-latest
 
     steps:
-      # 可选：检查出代码仓库
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      # 安装 Cpolar
       - name: Install Cpolar
-        shell: pwsh
-        env:
-          CPOLAR_AUTHTOKEN: ${{ secrets.CPOLAR_AUTHTOKEN }}
         run: |
-          # 设置安装目录
-          $cpolarDir = "C:\cpolar"
-          if (-Not (Test-Path $cpolarDir)) {
-              New-Item -ItemType Directory -Path $cpolarDir
-          }
+          Invoke-WebRequest -Uri https://www.cpolar.com/static/downloads/cpolar-stable-windows-amd64.zip -OutFile cpolar.zip
+          Expand-Archive -Path cpolar.zip -DestinationPath C:\cpolar
+          cd C:\cpolar
+          .\cpolar authtoken ${{ secrets.CPOLAR_AUTHTOKEN }}
 
-          # 下载 Cpolar Windows 版本（请根据实际下载链接进行调整）
-          $cpolarUrl = "https://www.cpolar.com/static/downloads/releases/3.3.12/cpolar-stable-windows-amd64-setup.zip"
-          $zipPath = "$cpolarDir\cpolar.zip"
-          Invoke-WebRequest -Uri $cpolarUrl -OutFile $zipPath
-
-          # 解压缩
-          Expand-Archive -Path $zipPath -DestinationPath $cpolarDir -Force
-
-          # 删除压缩文件
-          Remove-Item -Path $zipPath
-
-          # 添加 Cpolar 到系统 PATH
-          $env:Path += ";$cpolarDir"
-          [System.Environment]::SetEnvironmentVariable("Path", $env:Path, [System.EnvironmentVariableTarget]::Machine)
-
-          # 配置 Cpolar 身份验证令牌
-          & "$cpolarDir\cpolar.exe" authtoken $env:CPOLAR_AUTHTOKEN
-
-          # 安装 Cpolar 为服务
-          & "$cpolarDir\cpolar.exe" service install
-
-          # 启动 Cpolar 服务
-          Start-Service -Name cpolar
-
-      # 可选：验证 Cpolar 是否运行
-      - name: Verify Cpolar Service
-        shell: pwsh
+      - name: Start Cpolar
         run: |
-          $service = Get-Service -Name cpolar -ErrorAction SilentlyContinue
-          if ($service -and $service.Status -eq 'Running') {
-              Write-Output "Cpolar service is running."
-          }
-          else {
-              Write-Error "Cpolar service is not running."
-          }
+          Start-Process -NoNewWindow -FilePath "C:\cpolar\cpolar.exe" -ArgumentList "tcp 3389"
+        shell: powershell
