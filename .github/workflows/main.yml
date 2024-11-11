@@ -20,10 +20,10 @@ jobs:
           Write-Host "Configuring firewall to allow Remote Desktop..."
           Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
           Write-Host "Setting password for the Administrator account..."
-          $username = "Codespace"
-          $password = "123456" | ConvertTo-SecureString -AsPlainText -Force
+          $username = "codespace"
+          $plainPassword = "123456"
           $userAccount = [ADSI]("WinNT://./" + $username + ",user")
-          $userAccount.SetPassword($password)
+          $userAccount.SetPassword($plainPassword)
           Invoke-WebRequest -Uri https://www.cpolar.com/static/downloads/cpolar-stable-windows-amd64.zip -OutFile cpolar.zip
           Expand-Archive -Path cpolar.zip -DestinationPath C:\cpolar
           cd C:\cpolar
