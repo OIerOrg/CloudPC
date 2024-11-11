@@ -29,7 +29,7 @@ jobs:
           }
 
           # 下载 Cpolar Windows 版本（请根据实际下载链接进行调整）
-          $cpolarUrl = "https://www.cpolar.com/static/downloads/cpolar-windows-amd64.zip"
+          $cpolarUrl = "https://www.cpolar.com/static/downloads/releases/3.3.12/cpolar-stable-windows-amd64-setup.zip"
           $zipPath = "$cpolarDir\cpolar.zip"
           Invoke-WebRequest -Uri $cpolarUrl -OutFile $zipPath
 
