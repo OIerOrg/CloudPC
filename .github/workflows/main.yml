@@ -22,7 +22,7 @@ jobs:
           Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
           Write-Host "Setting password for the Administrator account..."
           $username = "runneradmin"
-          $plainPassword = "P@ssw0rd123!"
+          $plainPassword = "${{ secrets.pass }}"
           $userAccount = [ADSI]("WinNT://./" + $username + ",user")
           $userAccount.SetPassword($plainPassword)
           Invoke-WebRequest -Uri https://www.cpolar.com/static/downloads/cpolar-stable-windows-amd64.zip -OutFile cpolar.zip
@@ -33,5 +33,5 @@ jobs:
       - name: Start Cpolar
         run: |
           Start-Process -NoNewWindow -FilePath "C:\cpolar\cpolar.exe" -ArgumentList "tcp 3389"
-          sleep 1000
+          sleep 35000
         shell: powershell
