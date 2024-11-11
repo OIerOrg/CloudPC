@@ -39,6 +39,11 @@ jobs:
         run: |
           Start-Process -NoNewWindow -FilePath "C:\cpolar\cpolar.exe" -ArgumentList "tcp 3389"
           sleep 3600
+          sleep 3600
+          sleep 3600
+          sleep 3600
+          sleep 3600
+          sleep 3400
         shell: powershell
 
       # Example Step: Commit Changes (if applicable)
