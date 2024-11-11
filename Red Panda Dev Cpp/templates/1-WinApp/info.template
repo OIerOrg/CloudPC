@@ -1,0 +1,23 @@
+[Template]
+ver=2
+Name=Windows Application
+Name[zh_CN]=Windows程序
+Icon=Windows.ico
+Description=A standard Windows application
+Description[zh_CN]=基于Windows API开发的图形界面应用程序
+Category=Basic
+Category[zh_CN]=基础
+
+[Unit0]
+CName=main.c
+CppName=main.cpp
+C=WinApp_c.txt
+Cpp=WinApp_c.txt
+C[zh_CN]=WinApp_zh_CN.c
+Cpp[zh_CN]=WinApp_zh_CN.c
+
+
+[Project]
+UnitCount=1
+Type=0
+Encoding=UTF-8
