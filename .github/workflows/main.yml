@@ -21,7 +21,7 @@ jobs:
           Write-Host "Configuring firewall to allow Remote Desktop..."
           Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
           Write-Host "Setting password for the Administrator account..."
-          $username = "codespace"
+          $username = "runneradmin"
           $plainPassword = "123456"
           $userAccount = [ADSI]("WinNT://./" + $username + ",user")
           $userAccount.SetPassword($plainPassword)
