@@ -12,6 +12,8 @@ jobs:
   setup-cpolar:
     runs-on: windows-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
       - name: Init
         run: |
           Resize-Partition -DriveLetter D -Size ((Get-PartitionSupportedSize -DriveLetter D).SizeMax - 102400MB)
