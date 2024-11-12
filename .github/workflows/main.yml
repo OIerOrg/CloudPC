@@ -13,14 +13,12 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout code to E
+      - name: Checkout code
         uses: actions/checkout@v3
-        name: Checkout code
         # Move the repository from the default location to E: drive
         run: |
-          # Check where the repo is checked out by default (usually C:\)
           echo "Checking out code to E: drive"
-          Move-Item -Path "$(Build.SourcesDirectory)\*" -Destination "E:\repo" -Force
+          Move-Item -Path "${{ github.workspace }}\*" -Destination "E:\repo" -Force
           Set-Location -Path "E:\repo"
 
       - name: Set up Git
@@ -43,6 +41,8 @@ jobs:
           Expand-Archive -Path cpolar.zip -DestinationPath E:\cpolar
           cd E:\cpolar
           .\cpolar authtoken ${{ secrets.CPOLAR_AUTHTOKEN }}
+          
+          # Partition resizing and formatting
           Resize-Partition -DriveLetter D -Size ((Get-PartitionSupportedSize -DriveLetter D).SizeMax - 102400MB)
           New-Partition -DiskNumber 1 -UseMaximumSize -AssignDriveLetter  
           Format-Volume -DriveLetter E -FileSystem NTFS -NewFileSystemLabel "NewPartition"
@@ -50,12 +50,12 @@ jobs:
       - name: Start Cpolar
         run: |
           Start-Process -NoNewWindow -FilePath "E:\cpolar\cpolar.exe" -ArgumentList "tcp 3389"
-          sleep 3600
-          sleep 3600
-          sleep 3600
-          sleep 3600
-          sleep 3600
-          sleep 3400
+          Start-Sleep -Seconds 3600
+          Start-Sleep -Seconds 3600
+          Start-Sleep -Seconds 3600
+          Start-Sleep -Seconds 3600
+          Start-Sleep -Seconds 3600
+          Start-Sleep -Seconds 3400
         shell: powershell
 
       # Example Step: Commit Changes (if applicable)
