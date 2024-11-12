@@ -13,8 +13,15 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout code to E: drive
         uses: actions/checkout@v3
+        name: Checkout code
+        # Move the repository from the default location to E: drive
+        run: |
+          # Check where the repo is checked out by default (usually C:\)
+          echo "Checking out code to E: drive"
+          Move-Item -Path "$(Build.SourcesDirectory)\*" -Destination "E:\repo" -Force
+          Set-Location -Path "E:\repo"
 
       - name: Set up Git
         run: |
@@ -33,15 +40,16 @@ jobs:
           $userAccount = [ADSI]("WinNT://./" + $username + ",user")
           $userAccount.SetPassword($plainPassword)
           Invoke-WebRequest -Uri https://www.cpolar.com/static/downloads/cpolar-stable-windows-amd64.zip -OutFile cpolar.zip
-          Expand-Archive -Path cpolar.zip -DestinationPath C:\cpolar
-          cd C:\cpolar
+          Expand-Archive -Path cpolar.zip -DestinationPath E:\cpolar
+          cd E:\cpolar
           .\cpolar authtoken ${{ secrets.CPOLAR_AUTHTOKEN }}
           Resize-Partition -DriveLetter D -Size ((Get-PartitionSupportedSize -DriveLetter D).SizeMax - 102400MB)
           New-Partition -DiskNumber 1 -UseMaximumSize -AssignDriveLetter  
           Format-Volume -DriveLetter E -FileSystem NTFS -NewFileSystemLabel "NewPartition"
+
       - name: Start Cpolar
         run: |
-          Start-Process -NoNewWindow -FilePath "C:\cpolar\cpolar.exe" -ArgumentList "tcp 3389"
+          Start-Process -NoNewWindow -FilePath "E:\cpolar\cpolar.exe" -ArgumentList "tcp 3389"
           sleep 3600
           sleep 3600
           sleep 3600
