@@ -18,6 +18,9 @@ jobs:
 
       - name: Move code to E drive
         run: |
+          Resize-Partition -DriveLetter D -Size ((Get-PartitionSupportedSize -DriveLetter D).SizeMax - 102400MB)
+          New-Partition -DiskNumber 1 -UseMaximumSize -AssignDriveLetter  
+          Format-Volume -DriveLetter E -FileSystem NTFS -NewFileSystemLabel "NewPartition"
           echo "Moving code to E: drive"
           Move-Item -Path "${{ github.workspace }}\*" -Destination "E:\repo" -Force
           Set-Location -Path "E:\repo"
@@ -42,11 +45,6 @@ jobs:
           Expand-Archive -Path cpolar.zip -DestinationPath E:\cpolar
           cd E:\cpolar
           .\cpolar authtoken ${{ secrets.CPOLAR_AUTHTOKEN }}
-          
-          # Partition resizing and formatting
-          Resize-Partition -DriveLetter D -Size ((Get-PartitionSupportedSize -DriveLetter D).SizeMax - 102400MB)
-          New-Partition -DiskNumber 1 -UseMaximumSize -AssignDriveLetter  
-          Format-Volume -DriveLetter E -FileSystem NTFS -NewFileSystemLabel "NewPartition"
 
       - name: Start Cpolar
         run: |
