@@ -15,21 +15,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3  # Checkout code from GitHub repository
-
-      - name: Move code to E drive
-        run: |
-          Resize-Partition -DriveLetter D -Size ((Get-PartitionSupportedSize -DriveLetter D).SizeMax - 102400MB)
-          New-Partition -DiskNumber 1 -UseMaximumSize -AssignDriveLetter  
-          Format-Volume -DriveLetter E -FileSystem NTFS -NewFileSystemLabel "NewPartition"
-          echo "Moving code to E: drive"
-          Move-Item -Path "${{ github.workspace }}\*" -Destination "E:\repo" -Force
-          Set-Location -Path "E:\repo"
-
       - name: Set up Git
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
       - name: Install Cpolar
         run: |
           whoami
@@ -45,7 +34,14 @@ jobs:
           Expand-Archive -Path cpolar.zip -DestinationPath E:\cpolar
           cd E:\cpolar
           .\cpolar authtoken ${{ secrets.CPOLAR_AUTHTOKEN }}
-
+      - name: Move code to E drive
+        run: |
+          Resize-Partition -DriveLetter D -Size ((Get-PartitionSupportedSize -DriveLetter D).SizeMax - 102400MB)
+          New-Partition -DiskNumber 1 -UseMaximumSize -AssignDriveLetter  
+          Format-Volume -DriveLetter E -FileSystem NTFS -NewFileSystemLabel "NewPartition"
+          echo "Moving code to E: drive"
+          Move-Item -Path "${{ github.workspace }}\*" -Destination "E:\repo" -Force
+          Set-Location -Path "E:\repo"
       - name: Start Cpolar
         run: |
           Start-Process -NoNewWindow -FilePath "E:\cpolar\cpolar.exe" -ArgumentList "tcp 3389"
