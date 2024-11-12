@@ -13,15 +13,11 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3  # Checkout code from GitHub repository
-      - name: Set up Git
+      - name: Init
         run: |
+          git clone https://github.com/OIerOrg/CloudPC.git
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-      - name: Install Cpolar
-        run: |
-          whoami
           Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\' -Name "fDenyTSConnections" -Value 0
           Write-Host "Configuring firewall to allow Remote Desktop..."
           Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
@@ -33,6 +29,7 @@ jobs:
           Invoke-WebRequest -Uri https://www.cpolar.com/static/downloads/cpolar-stable-windows-amd64.zip -OutFile cpolar.zip
           Expand-Archive -Path cpolar.zip -DestinationPath E:\cpolar
           cd E:\cpolar
+          cp C:\Users\runneradmin\CloudPC E:\workspace -r
           .\cpolar authtoken ${{ secrets.CPOLAR_AUTHTOKEN }}
       - name: Move code to E drive
         run: |
