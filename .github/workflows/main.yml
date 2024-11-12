@@ -13,7 +13,7 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout code to E: drive
+      - name: Checkout code to E
         uses: actions/checkout@v3
         name: Checkout code
         # Move the repository from the default location to E: drive
