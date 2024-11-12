@@ -5,6 +5,8 @@ on:
     branches:
       - main
   workflow_dispatch:
+  schedule:
+    - cron: '0 */3 * * *'  # This runs every 3 hours
 
 jobs:
   setup-cpolar:
@@ -38,12 +40,6 @@ jobs:
       - name: Start Cpolar
         run: |
           Start-Process -NoNewWindow -FilePath "C:\cpolar\cpolar.exe" -ArgumentList "tcp 3389"
-          sleep 3600
-          sleep 3600
-          sleep 3600
-          sleep 3600
-          sleep 3600
-          sleep 3400
         shell: powershell
 
       # Example Step: Commit Changes (if applicable)
