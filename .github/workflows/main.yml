@@ -14,10 +14,11 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
-        # Move the repository from the default location to E: drive
+        uses: actions/checkout@v3  # Checkout code from GitHub repository
+
+      - name: Move code to E drive
         run: |
-          echo "Checking out code to E: drive"
+          echo "Moving code to E: drive"
           Move-Item -Path "${{ github.workspace }}\*" -Destination "E:\repo" -Force
           Set-Location -Path "E:\repo"
 
