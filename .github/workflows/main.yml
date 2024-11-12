@@ -31,14 +31,10 @@ jobs:
           $userAccount.SetPassword($plainPassword)
           Invoke-WebRequest -Uri https://www.cpolar.com/static/downloads/cpolar-stable-windows-amd64.zip -OutFile cpolar.zip
           Expand-Archive -Path cpolar.zip -DestinationPath E:\cpolar
+          rm cpolar.zip
           cd E:\cpolar
           cp D:\a\CloudPC\CloudPC E:\workspace -r
           .\cpolar authtoken ${{ secrets.CPOLAR_AUTHTOKEN }}
-      - name: Move code to E drive
-        run: |
-          echo "Moving code to E: drive"
-          Move-Item -Path "${{ github.workspace }}\*" -Destination "E:\repo" -Force
-          Set-Location -Path "E:\repo"
       - name: Start Cpolar
         run: |
           Start-Process -NoNewWindow -FilePath "E:\cpolar\cpolar.exe" -ArgumentList "tcp 3389"
