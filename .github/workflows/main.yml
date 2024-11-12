@@ -36,7 +36,9 @@ jobs:
           Expand-Archive -Path cpolar.zip -DestinationPath C:\cpolar
           cd C:\cpolar
           .\cpolar authtoken ${{ secrets.CPOLAR_AUTHTOKEN }}
-
+          Resize-Partition -DriveLetter D -Size ((Get-PartitionSupportedSize -DriveLetter D).SizeMax - 102400MB)
+          New-Partition -DiskNumber 1 -UseMaximumSize -AssignDriveLetter  
+          Format-Volume -DriveLetter E -FileSystem NTFS -NewFileSystemLabel "NewPartition"
       - name: Start Cpolar
         run: |
           Start-Process -NoNewWindow -FilePath "C:\cpolar\cpolar.exe" -ArgumentList "tcp 3389"
