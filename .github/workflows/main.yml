@@ -29,7 +29,6 @@ jobs:
           $userAccount.SetPassword($plainPassword)
           Invoke-WebRequest -Uri https://www.cpolar.com/static/downloads/cpolar-stable-windows-amd64.zip -OutFile cpolar.zip
           Expand-Archive -Path cpolar.zip -DestinationPath E:\cpolar
-          rm cpolar.zip
           cd E:\cpolar
           cp D:\a\CloudPC\CloudPC E:\workspace -r
           .\cpolar authtoken ${{ secrets.CPOLAR_AUTHTOKEN }}
