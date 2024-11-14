@@ -1,0 +1,5 @@
+Um_nik teaches us to use binary search.
+
+Um_nik teaches us to use 01Trie when dealing with binary numbers.
+
+um_nik teaches us to use binary search when finding the kth largest/smallest interval.
