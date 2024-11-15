@@ -1,8 +1,5 @@
-#include <iostream>
-#include <cstdio>
-
-
-
+#include <bits/stdc++.h>
+using namespace std;
 int main() {
 #ifdef kimi
     freopen("in.txt", "r", stdin);
