@@ -42,35 +42,13 @@ using namespace FastIO;
 
 int t, id;
 int n, m;
-
-bool mp[M][M];
-int mxr[M][M];
-
-int c () {
-    
-}
-
-int f () {
-
-}
+int arr[N];
 
 signed main() {
 #ifndef ONLINE_JUDGE
     freopen("in.txt", "r", stdin);
 #endif
-    read (t, id);
-    while (t--) {
-        read (n, m);
-        for (int i = 1; i <= n; i++) 
-            for (int j = 1; j <= m; j++)
-                mp[i][j] = gc() - '0';
-        for (int j = m; j; j--) 
-            for (int i = 1; i <= n; i++) {
-                if (!mp[i][j]) mxr[i][j] = 0;
-                else mxr[i][j] = mxr[i][j + 1] + 1;
-            }
-        writeln(c(), f());
-    }
+
     return 0;
 }
 
