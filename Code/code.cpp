@@ -40,81 +40,18 @@ template <typename T> typename std::enable_if_t<is_floating_point_ex<T>::value, 
 while (c >= '0' && c <= '9' && c != '.')   x = x * 10 + (c ^ 48), c = getchar(); if (c == '.') c = getchar(); else return x *= f, *this; while (c >= '0' && c <= '9') t = t * 10 + (c ^ 48), s++, c = getchar(); while (s--) t /= 10.0; x = (x + t) * f; return *this; }
 template <typename T> typename std::enable_if_t<is_char<T>::value, Reader&> operator>>(T& c) { c = getchar(); while (c == '\n' || c == ' ' || c == '\r') c = getchar(); return *this; } Reader& operator>>(char* str) { int len = 0;
 char c = getchar(); while (c == '\n' || c == ' ' || c == '\r') c = getchar(); while (c != '\n' && c != ' ' && c != '\r') str[len++] = c, c = getchar(); str[len] = '\0'; return *this; }
-template <typename T1, typename T2>
-Reader& operator>>(std::pair<T1, T2>& x) {
-*this >> x.first >> x.second;
-return *this;
-}
-Reader& operator>>(std::string& str) {
-str.clear();
-char c = getchar();
-while (c == '\n' || c == ' ' || c == '\r') c = getchar();
-while (c != '\n' && c != ' ' && c != '\r') str.push_back(c), c = getchar();
-return *this;
-}
-Reader() { }
-} cin;
-const char endl = '\n';
-struct Writer {
-typedef __int128 mxdouble;
-template <typename T>
-typename std::enable_if_t<std::is_class<T>::value, Writer&> operator<<(const T& x) {
-for (auto q : x) {
-*this << q;
-if (!is_class<decltype(q)>::value) *this << print_between;
-}
-if (!is_class<typename T::value_type>::value && print_T_endl) *this << '\n';
-return *this;
-}
-template <typename... T>
-Writer& operator<<(const std::tuple<T...>& x) {
-print_tuple<sizeof...(T)>::print(*this, x);
-if (print_T_endl) *this << '\n';
-return *this;
-}
-template <typename T>
-typename std::enable_if_t<is_integral_ex<T>::value, Writer&> operator<<(T x) {
-if (x == 0) return putchar('0'), *this;
-if (x < 0) putchar('-'), x = -x;
-static int sta[45];
-int top = 0;
-while (x) sta[++top] = x % 10, x /= 10;
-while (top) putchar(sta[top] + '0'), --top;
-return *this;
-}
-template <typename T>
-typename std::enable_if_t<is_floating_point_ex<T>::value, Writer&> operator<<(T x) {
-if (x < 0) putchar('-'), x = -x;
-x += pow(10, -print_precision) / 2;
-mxdouble _ = x;
-x -= (T)_;
-static int sta[45];
-int top = 0;
-while (_) sta[++top] = _ % 10, _ /= 10;
-if (!top) putchar('0');
-while (top) putchar(sta[top] + '0'), --top;
-putchar('.');
-for (int i = 0; i < print_precision; i++) x *= 10;
-_ = x;
-while (_) sta[++top] = _ % 10, _ /= 10;
-for (int i = 0; i < print_precision - top; i++) putchar('0');
-while (top) putchar(sta[top] + '0'), --top;
-return *this;
-}
-template <typename T>
-typename std::enable_if_t<is_char<T>::value, Writer&> operator<<(const T& c) {
-putchar(c);
-return *this;
-}
-Writer& operator<<(char* str) { int cur = 0; while (str[cur]) putchar(str[cur++]); return *this; }
-Writer& operator<<(const char* str) { int cur = 0; while (str[cur]) putchar(str[cur++]); return *this; }
-template <typename T1, typename T2> Writer& operator<<(const std::pair<T1, T2>& x) { *this << x.first << print_between << x.second; if (print_T_endl) *this << '\n'; 
-return *this;
-}
-Writer& operator<<(const std::string& str) {
-int st = 0, ed = str.size();
-while (st < ed) putchar(str[st++]);
-return *this; } Writer() { } } cout; } }
+template <typename T1, typename T2> Reader& operator>>(std::pair<T1, T2>& x) { *this >> x.first >> x.second; return *this; } Reader& operator>>(std::string& str) { str.clear(); char c = getchar(); while (c == '\n' || c == ' ' || c == '\r') c = getchar();
+while (c != '\n' && c != ' ' && c != '\r') str.push_back(c), c = getchar(); return *this; } Reader() { } } cin; const char endl = '\n'; struct Writer { typedef __int128 mxdouble;
+template <typename T> typename std::enable_if_t<std::is_class<T>::value, Writer&> operator<<(const T& x) { for (auto q : x) { *this << q; if (!is_class<decltype(q)>::value) *this << print_between; } if (!is_class<typename T::value_type>::value && print_T_endl) *this << '\n'; return *this; }
+template <typename... T> Writer& operator<<(const std::tuple<T...>& x) { print_tuple<sizeof...(T)>::print(*this, x); if (print_T_endl) *this << '\n'; return *this; }
+template <typename T> typename std::enable_if_t<is_integral_ex<T>::value, Writer&> operator<<(T x) { if (x == 0) return putchar('0'), *this; if (x < 0) putchar('-'), x = -x; static int sta[45]; int top = 0; while (x) sta[++top] = x % 10, x /= 10; while (top) putchar(sta[top] + '0'), --top; return *this; }
+template <typename T> typename std::enable_if_t<is_floating_point_ex<T>::value, Writer&> operator<<(T x) { if (x < 0) putchar('-'), x = -x; x += pow(10, -print_precision) / 2; mxdouble _ = x;
+x -= (T)_; static int sta[45]; int top = 0; while (_) sta[++top] = _ % 10, _ /= 10; if (!top) putchar('0'); while (top) putchar(sta[top] + '0'), --top; putchar('.'); for (int i = 0; i < print_precision; i++) x *= 10; _ = x; while (_) sta[++top] = _ % 10, _ /= 10;
+for (int i = 0; i < print_precision - top; i++) putchar('0'); while (top) putchar(sta[top] + '0'), --top; return *this; } template <typename T> typename std::enable_if_t<is_char<T>::value, Writer&> operator<<(const T& c) { putchar(c); return *this; }
+Writer& operator<<(char* str) { int cur = 0; while (str[cur]) putchar(str[cur++]); return *this; } Writer& operator<<(const char* str) { int cur = 0; while (str[cur]) putchar(str[cur++]); return *this; }
+template <typename T1, typename T2> Writer& operator<<(const std::pair<T1, T2>& x) { *this << x.first << print_between << x.second; if (print_T_endl) *this << '\n';  return *this; } Writer& operator<<(const std::string& str) { int st = 0, ed = str.size(); while (st < ed) putchar(str[st++]); return *this; } Writer() { } } cout; } }
+
+
 #define cin FastIO::Fastio::cin
 #define cout FastIO::Fastio::cout
 #define endl FastIO::Fastio::endl
