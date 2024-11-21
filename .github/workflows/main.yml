@@ -1,9 +1,6 @@
 name: Setup Cpolar on Windows
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
   schedule:
     - cron: '0 */3 * * *'  # This runs every 3 hours
@@ -41,7 +38,6 @@ jobs:
           Start-Sleep -Seconds 3600
           Start-Sleep -Seconds 3600
           Start-Sleep -Seconds 3600
-          Start-Sleep -Seconds 3400
         shell: powershell
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
