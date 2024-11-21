@@ -37,20 +37,43 @@ template <class T> inline void write(T x) {
     for (int i = cnt - 1; i >= 0; --i) putchar(digits[i] | 48);
 }
 inline void write(const char ch) { putchar(ch); }
-template <class T, class... R> inline void write(const T x, R... args) { write(x), write(args...); }
+template <class T, class... R> inline void write(const T x, R... args) { write(x), putchar(32), write(args...); }
 template <class... R> inline void writeln(R... args) { write(args...), putchar('\n'); }
 }
 using namespace FastIO;
 
 int t, id;
-int n, m;
-int arr[N];
+int n, m, ans = 1e9;
+int arr[N], minn1 = 1e9, minn2 = 1e9;
 
 signed main() {
 #ifndef ONLINE_JUDGE
     freopen("in.txt", "r", stdin);
 #endif
-
+    read (n);
+    for (int i = 1; i <= n; i++) read(arr[i]);
+    for (int i = 1; i <= n; i++) {
+        if (arr[i] < minn1) {
+            minn2 = minn1;
+            minn1 = arr[i];
+        } else if (arr[i] < minn2) {
+            minn2 = arr[i];
+        }
+    }
+    ans = (minn1 + 1) / 2 + (minn2 + 1) / 2;
+    for (int i = 3; i <= n; i++) {
+        int a = arr[i - 2], b = arr[i];
+        if (a > b) swap (a, b); // to a < b
+        ans = min(ans, a + max(0ll, (b - a + 1) / 2));
+    }
+    for (int i = 2; i <= n; i++) {
+        int a = arr[i - 1], b = arr[i];
+        int t1 = (a + 1) / 2;
+        ans = min(ans, t1 + max(0ll, (b - t1 + 1) / 2));
+        int t2 = (b + 1) / 2;
+        ans = min(ans, t2 + max(0ll, (a - t2 + 1) / 2));
+    }
+    writeln(ans);
     return 0;
 }
 
