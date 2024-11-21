@@ -68,10 +68,8 @@ signed main() {
     }
     for (int i = 2; i <= n; i++) {
         int a = arr[i - 1], b = arr[i];
-        int t1 = (a + 1) / 2;
-        ans = min(ans, t1 + max(0ll, (b - t1 + 1) / 2));
-        int t2 = (b + 1) / 2;
-        ans = min(ans, t2 + max(0ll, (a - t2 + 1) / 2));
+        if (a / b >= 2 || b / a >= 2) ans = min(ans, (max(a, b) + 1) / 2);
+        else ans = ans = min(ans, (a + b + 2) / 3);
     }
     writeln(ans);
     return 0;
