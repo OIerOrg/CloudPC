@@ -1,7 +1,7 @@
 // @Author: @qmwneb 
 // @Language: C++14 
 // @Date: Fri 11/22/2024 
-// @Time: 04:53 AM
+// @Time: 09:48 AM
 #include <bits/stdc++.h>
 #define int long long
 using namespace std;
@@ -246,7 +246,7 @@ struct Writer {
 #define cout FastIO::Fastio::cout
 #define endl FastIO::Fastio::endl
 
-#define mutil false
+#define mutil true
 int t = 1, id;
 int n, m, ans;
 int arr[N];
@@ -266,6 +266,6 @@ signed main() {
 void solve(int cas) {
     
 }
-// Start Time =  04:53 AM
+// Start Time =  09:48 AM
 // End Time =  
 // Submit Times = 1 
