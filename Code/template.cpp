@@ -1,12 +1,8 @@
-// Written by @qmwneb
-// Some references to others' default sources
-// Written in Windows 10, Sublime Text 3
-
 #include <bits/stdc++.h>
 #define int long long
 using namespace std;
 
-const int N = 5e5 + 10;
+const int N = 1e7 + 10;
 const int M = 1e3 + 10;
 const int Lg = 30;
 const int mod1 = 1e9 + 7;
@@ -264,13 +260,6 @@ signed main() {
 
 
 void solve(int cas) {
-    cin >> n;
-    while (n--) { cin >> m; ans += m; } cout << ans << '\n';
+    
 }
-
-// 计时
-// 一遍过
-
-// Start Time = 
-// End Time = 
-// Submit Times = 
+// Start Time =  

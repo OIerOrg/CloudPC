@@ -1,12 +1,12 @@
-// Written by @qmwneb
-// Some references to others' default sources
-// Written in Windows 10, Sublime Text 3
-
+// @Author: @qmwneb 
+// @Language: C++14 
+// @Date: Fri 11/22/2024 
+// @Time: 04:53 AM
 #include <bits/stdc++.h>
 #define int long long
 using namespace std;
 
-const int N = 5e5 + 10;
+const int N = 1e7 + 10;
 const int M = 1e3 + 10;
 const int Lg = 30;
 const int mod1 = 1e9 + 7;
@@ -257,29 +257,15 @@ signed main() {
 #ifndef ONLINE_JUDGE
     freopen("in.txt", "r", stdin);
 #endif
-    long long n;
-    cin >> n;
-
-    switch (n) {
-        case 100000:
-            cout << 2878190 << endl;
-            break;
-        case 1000000:
-            cout << -17499582 << endl;
-            break;
-        case 10000000:
-            cout << -10374448 << endl;
-            break;
-        default:
-            cout << 189674552 << endl;
-    }
+    if (mutil) cin >> t;
+    for (int cas = 1; cas <= t; cas++) solve(cas);
     return 0;
 }
 
 
-// 计时
-// 一遍过
-
-// Start Time = 
-// End Time = 
-// Submit Times = 
+void solve(int cas) {
+    
+}
+// Start Time =  04:53 AM
+// End Time =  
+// Submit Times = 1 
