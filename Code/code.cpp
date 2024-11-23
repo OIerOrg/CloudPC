@@ -1,7 +1,7 @@
 // @Author: @qmwneb 
 // @Language: C++14 
-// @Date: Fri 11/22/2024 
-// @Time: 09:48 AM
+// @Date: Sat 11/23/2024 
+// @Time: 07:54 AM
 #include <bits/stdc++.h>
 #define int long long
 using namespace std;
@@ -246,7 +246,7 @@ struct Writer {
 #define cout FastIO::Fastio::cout
 #define endl FastIO::Fastio::endl
 
-#define mutil true
+#define mutil false
 int t = 1, id;
 int n, m, ans;
 int arr[N];
@@ -263,9 +263,54 @@ signed main() {
 }
 
 
-void solve(int cas) {
-    
+int n, m, k;
+
+int b[N][N]; // 差分数组
+int x[N], y[N]; // 原数组
+int nn, mm, tx[N], ty[N]; // 离散化数组
+int lx[N], rx[N], ly[N], ry[N]; // k = mid 时候的影响边界
+bool check (int mid) { // 判断 k = mid 是否可以
+    nn = 0, mm = 0;
+    tx[++nn] = 1, tx[++nn] = n;
+    ty[++mm] = 1, ty[++mm] + m;
+    for (int i = 1; i <= k; i++) {
+        lx[i] = max(1ll, x[i] - mid + 1);
+        rx[i] = min(n, x[i] + mid - 1);
+        ly[i] = max(1ll, y[i] - mid + 1);
+        ry[i] = min(m, y[i] + mid - 1);
+        tx[++nn] = lx[i], tx[++nn] = rx[i];
+        ty[++mm] = ly[i], ty[++mm] = ry[i];
+    }
+    sort (tx + 1, tx + nn + 1); nn = unique(tx + 1, tx + nn + 1) - tx - 1;
+    sort (ty + 1, ty + mm + 1); mm = unique(ty + 1, ty + mm + 1) - ty - 1;
+
+    for (int i = 1; i <= k; i++) {
+        b[lx[i]][ly[i]]++;
+        if (ry[i] != m) b[lx[i]][ry[i] + 1]--;
+        if (rx[i] != n) b[rx[i] + 1][ly[i]]--;
+        if (rx[i] != n && ry[i] != m) b[rx[i] + 1][ry[i] + 1]++;
+    }
+    for (int i = 1; i <= n; i++) 
+        for (int j = 1; j <= m; j++) 
+            b[i][j] = b[i][j - 1] + b[i - 1][j] - b[i - 1][j - 1];
+    int min1
 }
-// Start Time =  09:48 AM
+
+void solve(int cas) {
+    cin >> n >> m >> k;
+    for (int i = 1; i <= k; i++) cin >> x[i] >> y[i];
+    int l = 1, r = n, ans;
+    while (l <= r) {
+        int mid = (l + r) >> 1;
+        if (check (mid)) {
+            ans = mid;
+            r = mid - 1;
+        } else {
+            l = mid + 1;
+        }
+    }
+    cout << ans << '\n';
+}
+// Start Time =  07:54 AM
 // End Time =  
 // Submit Times = 1 
