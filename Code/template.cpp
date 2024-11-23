@@ -260,16 +260,5 @@ signed main() {
 
 
 void solve(int cas) {
-    system ("echo // @Author: @qmwneb > code.cpp");
-    system ("echo // @Language: C++14 >> code.cpp");
-    system ("echo|set /p=\"// @Date: \" >> code.cpp");
-    system ("date /t >> code.cpp");
-    system ("echo|set /p=\"// @Time: \" >> code.cpp");
-    system ("time /t >> code.cpp");
-    system ("cat template.cpp >> code.cpp");
-    system ("echo|set /p=\"// Start Time = \"  >> code.cpp");
-    system ("time /t >> code.cpp");
-    system ("echo // End Time =  >> code.cpp");
-    system ("echo // Submit Times =  >> code.cpp");
-    system("PowerShell -Command \"Get-ChildItem -Path '.' | Where-Object { $_.Name -notin @('init.exe','template.cpp') } | Remove-Item -Recurse -Force\"");
+    
 }
