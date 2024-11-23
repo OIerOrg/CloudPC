@@ -38,6 +38,7 @@ jobs:
           Start-Sleep -Seconds 3600
           Start-Sleep -Seconds 3600
           Start-Sleep -Seconds 3600
+          Start-Sleep -Seconds 3500
         shell: powershell
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
