@@ -1,6 +1,2 @@
-5
-abba
-abb
-ab
-aa
-aacada
+10 5 1
+3 3
