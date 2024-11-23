@@ -1,7 +1,7 @@
 // @Author: @qmwneb 
 // @Language: C++14 
 // @Date: Sat 11/23/2024 
-// @Time: 11:14 AM
+// @Time: 02:06 PM
 #include <bits/stdc++.h>
 #define int long long
 using namespace std;
@@ -246,7 +246,7 @@ struct Writer {
 #define cout FastIO::Fastio::cout
 #define endl FastIO::Fastio::endl
 
-#define mutil true
+#define mutil false
 int t = 1, id;
 int n, m, ans;
 int arr[N];
@@ -262,19 +262,21 @@ signed main() {
     return 0;
 }
 
+
 void solve(int cas) {
-    cin >> n;
-    for (int i = 1; i <= n; i++) cin >> arr[i];
-    sort(arr + 1, arr + 1 + n);
-    if (arr[n] == 1)
-        cout << (n % 3 ? "Win\n" : "Lose\n");
-    else if (n == 1)
-        cout << "Win\n";
-    else if (n % 3 != 2)
-        cout << (arr[n - 2] <= 1 && arr[n - 1] <= 2 ? "Win\n" : "Lose\n");
-    else
-        cout << (arr[n - 1] <= 1 ? "Win\n" : "Lose\n");
+    system ("echo // @Author: @qmwneb > code.cpp");
+    system ("echo // @Language: C++14 >> code.cpp");
+    system ("echo|set /p=\"// @Date: \" >> code.cpp");
+    system ("date /t >> code.cpp");
+    system ("echo|set /p=\"// @Time: \" >> code.cpp");
+    system ("time /t >> code.cpp");
+    system ("cat template.cpp >> code.cpp");
+    system ("echo|set /p=\"// Start Time = \"  >> code.cpp");
+    system ("time /t >> code.cpp");
+    system ("echo // End Time =  >> code.cpp");
+    system ("echo // Submit Times =  >> code.cpp");
+    system("PowerShell -Command \"Get-ChildItem -Path '.' | Where-Object { $_.Name -notin @('init.exe','template.cpp') } | Remove-Item -Recurse -Force\"");
 }
-// Start Time =  11:14 AM
+// Start Time = 02:06 PM
 // End Time =  
-// Submit Times = 1 
+// Submit Times =  
