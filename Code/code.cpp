@@ -1,12 +1,12 @@
 // @Author: @qmwneb 
 // @Language: C++14 
 // @Date: Sat 11/23/2024 
-// @Time: 07:54 AM
+// @Time: 11:14 AM
 #include <bits/stdc++.h>
 #define int long long
 using namespace std;
 
-const int N = 1e4 + 10;
+const int N = 1e7 + 10;
 const int M = 1e3 + 10;
 const int Lg = 30;
 const int mod1 = 1e9 + 7;
@@ -246,8 +246,10 @@ struct Writer {
 #define cout FastIO::Fastio::cout
 #define endl FastIO::Fastio::endl
 
-#define mutil false
+#define mutil true
 int t = 1, id;
+int n, m, ans;
+int arr[N];
 
 void solve(int cas);
 
@@ -260,72 +262,19 @@ signed main() {
     return 0;
 }
 
-int n, m, k;
-int b[N][N]; // 差分数组
-int x[N], y[N]; // 原数组
-int nn, mm, tx[N], ty[N]; // 离散化数组
-int lx[N], rx[N], ly[N], ry[N]; // k = mid 时候的影响边界
-bool check (int mid) { // 判断 k = mid 是否可以
-    for (int i = 0; i <= nn + 1; i++)
-        for (int j = 0; j <= mm + 1; j++)
-            b[i][j] = 0;
-    nn = 0, mm = 0;
-    tx[++nn] = 1, tx[++nn] = n;
-    ty[++mm] = 1, ty[++mm] = m;
-    for (int i = 1; i <= k; i++) {
-        lx[i] = max(1ll, x[i] - mid);
-        rx[i] = min(n, x[i] + mid);
-        ly[i] = max(1ll, y[i] - mid);
-        ry[i] = min(m, y[i] + mid);
-        tx[++nn] = lx[i], tx[++nn] = rx[i];
-        ty[++mm] = ly[i], ty[++mm] = ry[i];
-        tx[++nn] = max(1ll, lx[i] - 1), tx[++nn] = min(n, rx[i] + 1);
-        ty[++mm] = max(1ll, ly[i] - 1), ty[++mm] = max(m, ry[i] + 1);
-    }
-    sort (tx + 1, tx + nn + 1); nn = unique(tx + 1, tx + nn + 1) - tx - 1;
-    sort (ty + 1, ty + mm + 1); mm = unique(ty + 1, ty + mm + 1) - ty - 1;
-    for (int i = 1; i <= k; i++) {
-        lx[i] = lower_bound (tx + 1, tx + nn + 1, lx[i]) - tx;
-        rx[i] = lower_bound (tx + 1, tx + nn + 1, rx[i]) - tx;
-        ly[i] = lower_bound (ty + 1, ty + mm + 1, ly[i]) - ty;
-        ry[i] = lower_bound (ty + 1, ty + mm + 1, ry[i]) - ty;
-    }
-    for (int i = 1; i <= k; i++) {
-        b[lx[i]][ly[i]]++;
-        if (ry[i] != m) b[lx[i]][ry[i] + 1]--;
-        if (rx[i] != n) b[rx[i] + 1][ly[i]]--;
-        if (rx[i] != n && ry[i] != m) b[rx[i] + 1][ry[i] + 1]++;
-    }
-    int minx = 1e9, maxx = 0, miny = 1e9, maxy = 0;
-    for (int i = 1; i <= nn; i++) 
-        for (int j = 1; j <= mm; j++) {
-            b[i][j] = b[i][j - 1] + b[i - 1][j] - b[i - 1][j - 1];
-            if (!b[i][j]) {
-                minx = min(minx, i);
-                miny = min(miny, j);
-                maxx = max(maxx, i);
-                maxy = max(maxy, j);
-            }
-        }
-    if (!maxx) return true;
-    return (max(tx[maxx] - tx[minx] + 1, ty[maxy] - ty[miny] + 1) >> 1) <= mid;
-}
-
 void solve(int cas) {
-    cin >> n >> m >> k;
-    for (int i = 1; i <= k; i++) cin >> x[i] >> y[i];
-    int l = 0, r = max(m, n), ans = -1;
-    while (l <= r) {
-        int mid = (l + r) >> 1;
-        if (check (mid)) {
-            ans = mid;
-            r = mid - 1;
-        } else {
-            l = mid + 1;
-        }
-    }
-    cout << ans << '\n';
+    cin >> n;
+    for (int i = 1; i <= n; i++) cin >> arr[i];
+    sort(arr + 1, arr + 1 + n);
+    if (arr[n] == 1)
+        cout << (n % 3 ? "Win\n" : "Lose\n");
+    else if (n == 1)
+        cout << "Win\n";
+    else if (n % 3 != 2)
+        cout << (arr[n - 2] <= 1 && arr[n - 1] <= 2 ? "Win\n" : "Lose\n");
+    else
+        cout << (arr[n - 1] <= 1 ? "Win\n" : "Lose\n");
 }
-// Start Time =  07:54 AM
+// Start Time =  11:14 AM
 // End Time =  
 // Submit Times = 1 
