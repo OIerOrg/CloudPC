@@ -1,7 +1,7 @@
 // @Author: @qmwneb 
 // @Language: C++14 
-// @Date: Sat 11/23/2024 
-// @Time: 02:44 PM
+// @Date: Sun 11/24/2024 
+// @Time: 05:47 AM
 #include <bits/stdc++.h>
 #define int long long
 using namespace std;
@@ -246,9 +246,19 @@ struct Writer {
 #define cout FastIO::Fastio::cout
 #define endl FastIO::Fastio::endl
 
-#define mutil true
+#define mutil false
 int t = 1, id;
-string s;
+
+int n, l, r, ans, pw[10100];
+int qpow(int a, int b) {
+    int res = 1;
+    while(b) {
+        if(b & 1) res *= a;
+        a *= a, b >>= 1;
+    }
+    return res > INT_MAX ? INT_MAX : res;
+}
+int gcd(int a, int b) { return b ? gcd(b, a % b) : a; }
 
 void solve(int cas);
 
@@ -263,22 +273,21 @@ signed main() {
 
 
 void solve(int cas) {
-    cin >> s;
-    if (s.size() == 1) cout << -1 << '\n';
-    else {
-        for (int i = 1; i < s.size(); i++) {
-            if (s[i - 1] == s[i]) {
-                cout << s[i - 1] << s[i] << '\n'; return;
+    cin >> n >> l >> r;
+    if(n > 24) return puts("0"), void();
+    if(n == 1) return printf("%d\n", r - l + 1), void();
+    if(n == 2) return printf("%lld\n", (r - l + 1ll) * (r - l)), void();
+    for(int i = 1; ; i++) if((pw[i] = qpow(i, n - 1)) > r) break;
+    for(int p = 1; pw[p] <= r; p++)
+        for(int q = 1; pw[q] <= r; q++)
+            if(gcd(p, q) == 1 && (p != 1 || q != 1)) {
+                int L = max((l + pw[p] - 1) / pw[p], (l + pw[q] - 1) / pw[q]);
+                int R = min(r / pw[p], r / pw[q]);
+                ans += max(0ll, R - L + 1);
             }
-        }
-        for (int i = 2; i < s.size(); i++) {
-            if (s[i - 1] != s[i] && s[i - 2] != s[i - 1]) {
-                cout << s[i - 2] << s[i - 1] << s[i] << '\n'; return;
-            }
-        }
-        cout << -1 << '\n';
-    }
+    printf("%d\n", ans);
+    return;
 }
-// Start Time = 02:44 PM
+// Start Time = 05:47 AM
 // End Time =  
 // Submit Times =  
