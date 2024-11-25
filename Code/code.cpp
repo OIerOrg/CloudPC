@@ -1,7 +1,7 @@
 // @Author: @qmwneb 
 // @Language: C++14 
-// @Date: Sun 11/24/2024 
-// @Time: 05:47 AM
+// @Date: Mon 11/25/2024 
+// @Time: 01:00 AM
 #include <bits/stdc++.h>
 #define int long long
 using namespace std;
@@ -246,20 +246,14 @@ struct Writer {
 #define cout FastIO::Fastio::cout
 #define endl FastIO::Fastio::endl
 
-#define mutil false
+#define mutil true
+#define pii pair <int, int>
+
 int t = 1, id;
-
-int n, l, r, ans, pw[10100];
-int qpow(int a, int b) {
-    int res = 1;
-    while(b) {
-        if(b & 1) res *= a;
-        a *= a, b >>= 1;
-    }
-    return res > INT_MAX ? INT_MAX : res;
-}
-int gcd(int a, int b) { return b ? gcd(b, a % b) : a; }
-
+int n;
+int arr[N];
+vector <pii> ops;
+vector <int> stk;
 void solve(int cas);
 
 signed main() {
@@ -273,21 +267,37 @@ signed main() {
 
 
 void solve(int cas) {
-    cin >> n >> l >> r;
-    if(n > 24) return puts("0"), void();
-    if(n == 1) return printf("%d\n", r - l + 1), void();
-    if(n == 2) return printf("%lld\n", (r - l + 1ll) * (r - l)), void();
-    for(int i = 1; ; i++) if((pw[i] = qpow(i, n - 1)) > r) break;
-    for(int p = 1; pw[p] <= r; p++)
-        for(int q = 1; pw[q] <= r; q++)
-            if(gcd(p, q) == 1 && (p != 1 || q != 1)) {
-                int L = max((l + pw[p] - 1) / pw[p], (l + pw[q] - 1) / pw[q]);
-                int R = min(r / pw[p], r / pw[q]);
-                ans += max(0ll, R - L + 1);
+    cin >> n; for (int i = 1; i <= n; i++) cin >> arr[i];
+    for (int i = 1; i <= n; i++) {
+        if (stk.empty() || (stk.size() && stk.back() == arr[i]));
+        else {
+            int Sz = stk.size();
+            if (Sz >= 2 && stk[Sz - 1] == stk[Sz - 2]) {
+                int val = stk[Sz - 2], cnt = 0;
+                while (stk.size() && stk.back() == val) stk.pop_back(), cnt++;
+                ops.push_back({2, cnt});
             }
-    printf("%d\n", ans);
-    return;
+        }
+        stk.push_back(arr[i]);
+        ops.push_back({1, 0});  
+    }
+    int Sz = stk.size();
+    if (Sz >= 2 && stk[Sz - 1] == stk[Sz - 2]) {
+        int val = stk[Sz - 2], cnt = 0;
+        while (stk.size() && stk.back() == val) stk.pop_back(), cnt++;
+        ops.push_back({2, cnt});
+    }
+    if (stk.size()) {
+        cout << "No\n";
+    } else {
+        cout << "Yes\n";
+        for (pii i : ops) {
+            if (i.first == 1) cout << 1 << '\n';
+            else cout << 2 << ' ' << i.second << '\n';
+        }
+    }
+    ops.clear(); stk.clear();
 }
-// Start Time = 05:47 AM
+// Start Time = 01:00 AM
 // End Time =  
 // Submit Times =  
