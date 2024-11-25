@@ -1,12 +1,12 @@
 // @Author: @qmwneb 
 // @Language: C++14 
 // @Date: Mon 11/25/2024 
-// @Time: 09:02 AM
+// @Time: 02:00 PM
 #include <bits/stdc++.h>
 #define int long long
 using namespace std;
 
-const int N = 1e7 + 10;
+const int N = 5e5 + 1000;
 const int M = 1e3 + 10;
 const int Lg = 30;
 const int mod1 = 1e9 + 7;
@@ -248,6 +248,9 @@ struct Writer {
 
 #define mutil false
 int t = 1, id;
+int n, m, ans;
+int arr[N];
+
 void solve(int cas);
 
 signed main() {
@@ -259,55 +262,24 @@ signed main() {
     return 0;
 }
 
-int n, m, Max, x, y;
-int a[M], b[M], dp[M][M];
-void print_ans(int x, int y) {
-    if (dp[x][y] == 1) {
-        printf("%d ", b[y]);
-        return;
-    }
-    if (!x || !y) return;
-    if (dp[x][y] == dp[x - 1][y]) {
-        print_ans(x - 1, y);
-        return;
-    }
-    for (int i = y - 1; i >= 1; i--) {
-        if (b[i] < b[y] && dp[x][y] == dp[x - 1][i] + 1) {
-            print_ans(x, i);
-            printf("%d ", b[y]);
-            return;
-        }
-    }
-}
-void solve(int cas) {
-    scanf("%d", &n);
-    for (int i = 1; i <= n; i++) {
-        scanf("%d", &a[i]);
-    }
-    scanf("%d", &m);
-    for (int i = 1; i <= m; i++) {
-        scanf("%d", &b[i]);
-    }
-    a[0] = b[0] = INT_MIN;
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= m; j++) {
-            if (a[i] == b[j]) {
-                for (int k = 0; k < j; k++) {
-                    if (b[k] < a[i]) {
-                        dp[i][j] = max(dp[i][j], dp[i - 1][k] + 1);
-                    }
-                }
-                if (Max < dp[i][j]) Max = dp[i][j], x = i, y = j;
-            } else {
-                dp[i][j] = dp[i - 1][j];
-            }
-        }
-    }
-    printf("%d\n", Max);
-    print_ans(x, y);
-    return;
-}
+int a, b, T, k;
 
-// Start Time = 09:02 AM
+int dp[2][N]; // a - b + 100000
+
+void solve(int cas) {
+    cin >> a >> b >> k >> T;
+    for (int i = a - b + 250000; i <= 500000; i++) dp[0][i] = 1;
+    for (int i = 1; i <= T * 2; i++) {
+        for (int j = 0; j <= 500000; j++) dp[i & 1][j] = 0; // 清零
+        for (int j = 0; j <= 500000; j++) {
+            int l = max(0ll, j - k), r = min(500000ll, j + k);
+            int val = (dp[(i + 1) & 1][r] - (l == 0 ? 0 : dp[(i + 1) & 1][l - 1]) + mod1) % mod1;
+            dp[i & 1][j] += val;
+        }
+        for (int j = 1; j <= 500000; j++) (dp[i & 1][j] += dp[i & 1][j - 1]) %= mod1;
+    }
+    cout << (dp[0][500000] - dp[0][250000] + mod1) % mod1 << '\n';
+}
+// Start Time = 02:00 PM
 // End Time =  
 // Submit Times =  
