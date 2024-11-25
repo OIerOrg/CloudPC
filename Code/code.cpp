@@ -275,7 +275,7 @@ void solve(int cas) {
             if (Sz >= 2 && stk[Sz - 1] == stk[Sz - 2]) {
                 int val = stk[Sz - 2], cnt = 0;
                 while (stk.size() && stk.back() == val) stk.pop_back(), cnt++;
-                ops.push_back({2, cnt});
+                ops.push_back({2, cnt - 1});
             }
         }
         stk.push_back(arr[i]);
@@ -285,7 +285,7 @@ void solve(int cas) {
     if (Sz >= 2 && stk[Sz - 1] == stk[Sz - 2]) {
         int val = stk[Sz - 2], cnt = 0;
         while (stk.size() && stk.back() == val) stk.pop_back(), cnt++;
-        ops.push_back({2, cnt});
+        ops.push_back({2, cnt - 1});
     }
     if (stk.size()) {
         cout << "No\n";
