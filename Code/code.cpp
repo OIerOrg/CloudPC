@@ -1,7 +1,7 @@
 // @Author: @qmwneb 
 // @Language: C++14 
 // @Date: Mon 11/25/2024 
-// @Time: 01:00 AM
+// @Time: 02:18 AM
 #include <bits/stdc++.h>
 #define int long long
 using namespace std;
@@ -246,14 +246,11 @@ struct Writer {
 #define cout FastIO::Fastio::cout
 #define endl FastIO::Fastio::endl
 
-#define mutil true
-#define pii pair <int, int>
-
+#define mutil false
 int t = 1, id;
-int n;
+int n, m, ans;
 int arr[N];
-vector <pii> ops;
-vector <int> stk;
+
 void solve(int cas);
 
 signed main() {
@@ -265,39 +262,28 @@ signed main() {
     return 0;
 }
 
+inline int query (int l, int r) {
+    int ans = 0, now = 0;
+    for (int i = l; i <= r; ++i) {
+        now += arr[i];
+        now = max(0ll, now);
+        ans = max(ans, now);
+    }
+    return ans;
+}
 
 void solve(int cas) {
-    cin >> n; for (int i = 1; i <= n; i++) cin >> arr[i];
-    for (int i = 1; i <= n; i++) {
-        if (stk.empty() || (stk.size() && stk.back() == arr[i]));
-        else {
-            int Sz = stk.size();
-            if (Sz >= 2 && stk[Sz - 1] == stk[Sz - 2]) {
-                int val = stk[Sz - 2], cnt = 0;
-                while (stk.size() && stk.back() == val) stk.pop_back(), cnt++;
-                ops.push_back({2, cnt - 1});
-            }
-        }
-        stk.push_back(arr[i]);
-        ops.push_back({1, 0});  
+    cin >> id >> n;
+    for (int i = 1; i <= n; i++) cin >> arr[i];
+    int q; cin >> q;
+    while (q--) {
+        int l, r, ans = 0; cin >> l >> r;
+        for (int u = l; u <= r; ++u) 
+            for (int v = u; v <= r; ++v)
+                ans += query (u, v);
+        cout << ans << '\n';
     }
-    int Sz = stk.size();
-    if (Sz >= 2 && stk[Sz - 1] == stk[Sz - 2]) {
-        int val = stk[Sz - 2], cnt = 0;
-        while (stk.size() && stk.back() == val) stk.pop_back(), cnt++;
-        ops.push_back({2, cnt - 1});
-    }
-    if (stk.size()) {
-        cout << "No\n";
-    } else {
-        cout << "Yes\n";
-        for (pii i : ops) {
-            if (i.first == 1) cout << 1 << '\n';
-            else cout << 2 << ' ' << i.second << '\n';
-        }
-    }
-    ops.clear(); stk.clear();
 }
-// Start Time = 01:00 AM
+// Start Time = 02:18 AM
 // End Time =  
 // Submit Times =  
