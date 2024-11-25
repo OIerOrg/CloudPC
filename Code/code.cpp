@@ -1,7 +1,7 @@
 // @Author: @qmwneb 
 // @Language: C++14 
 // @Date: Mon 11/25/2024 
-// @Time: 02:18 AM
+// @Time: 09:02 AM
 #include <bits/stdc++.h>
 #define int long long
 using namespace std;
@@ -248,9 +248,6 @@ struct Writer {
 
 #define mutil false
 int t = 1, id;
-int n, m, ans;
-int arr[N];
-
 void solve(int cas);
 
 signed main() {
@@ -262,28 +259,55 @@ signed main() {
     return 0;
 }
 
-inline int query (int l, int r) {
-    int ans = 0, now = 0;
-    for (int i = l; i <= r; ++i) {
-        now += arr[i];
-        now = max(0ll, now);
-        ans = max(ans, now);
+int n, m, Max, x, y;
+int a[M], b[M], dp[M][M];
+void print_ans(int x, int y) {
+    if (dp[x][y] == 1) {
+        printf("%d ", b[y]);
+        return;
     }
-    return ans;
+    if (!x || !y) return;
+    if (dp[x][y] == dp[x - 1][y]) {
+        print_ans(x - 1, y);
+        return;
+    }
+    for (int i = y - 1; i >= 1; i--) {
+        if (b[i] < b[y] && dp[x][y] == dp[x - 1][i] + 1) {
+            print_ans(x, i);
+            printf("%d ", b[y]);
+            return;
+        }
+    }
+}
+void solve(int cas) {
+    scanf("%d", &n);
+    for (int i = 1; i <= n; i++) {
+        scanf("%d", &a[i]);
+    }
+    scanf("%d", &m);
+    for (int i = 1; i <= m; i++) {
+        scanf("%d", &b[i]);
+    }
+    a[0] = b[0] = INT_MIN;
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            if (a[i] == b[j]) {
+                for (int k = 0; k < j; k++) {
+                    if (b[k] < a[i]) {
+                        dp[i][j] = max(dp[i][j], dp[i - 1][k] + 1);
+                    }
+                }
+                if (Max < dp[i][j]) Max = dp[i][j], x = i, y = j;
+            } else {
+                dp[i][j] = dp[i - 1][j];
+            }
+        }
+    }
+    printf("%d\n", Max);
+    print_ans(x, y);
+    return;
 }
 
-void solve(int cas) {
-    cin >> id >> n;
-    for (int i = 1; i <= n; i++) cin >> arr[i];
-    int q; cin >> q;
-    while (q--) {
-        int l, r, ans = 0; cin >> l >> r;
-        for (int u = l; u <= r; ++u) 
-            for (int v = u; v <= r; ++v)
-                ans += query (u, v);
-        cout << ans << '\n';
-    }
-}
-// Start Time = 02:18 AM
+// Start Time = 09:02 AM
 // End Time =  
 // Submit Times =  
