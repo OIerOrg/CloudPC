@@ -242,7 +242,7 @@ struct Writer {
 #define cout FastIO::Fastio::cout
 #define endl FastIO::Fastio::endl
 
-#define mutil false
+#define multi false
 int t = 1, id;
 int n, m, ans;
 int arr[N];
@@ -253,7 +253,7 @@ signed main() {
 #ifndef ONLINE_JUDGE
     freopen("in.txt", "r", stdin);
 #endif
-    if (mutil) cin >> t;
+    if (multi) cin >> t;
     for (int cas = 1; cas <= t; cas++) solve(cas);
     return 0;
 }

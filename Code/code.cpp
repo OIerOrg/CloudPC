@@ -1,14 +1,12 @@
 // @Author: @qmwneb 
 // @Language: C++14 
 // @Date: Tue 11/26/2024 
-// @Time: 06:16 AM
+// @Time: 01:40 PM
 #include <bits/stdc++.h>
-#pragma GCC optimize("Ofast")
 #define int long long
 using namespace std;
 
-const int N = 2e5 + 10;
-const int M = 1e3 + 10;
+const int N = 1e5 + 10;
 const int Lg = 30;
 const int mod1 = 1e9 + 7;
 const int mod9 = 998244353;
@@ -246,15 +244,19 @@ struct Writer {
 #define cin FastIO::Fastio::cin
 #define cout FastIO::Fastio::cout
 #define endl FastIO::Fastio::endl
-
 #define mutil false
-vector<pair<int, int>> directions = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
-
 int t = 1, id;
-int n, m;
-int x[N], y[N];
-map <pair <int, int>, pair <int, int>> ans;
-map <pair <int, int>, bool> vis;
+int n, m, ans, checking, cnt;
+
+int head[N], to[N], w[N], lst[N], res;
+
+void add (int x, int y, int z) {
+    lst[++res] = head[x];
+    to[res] = y;
+    w[res] = z;
+    head[x] = res;
+}
+vector <pair <int, int>> edge[N];
 void solve(int cas);
 
 signed main() {
@@ -262,41 +264,72 @@ signed main() {
     freopen("in.txt", "r", stdin);
 #endif
     if (mutil) cin >> t;
-    for (int cas = 1; cas <= t; cas++) solve(cas);
+    for (int cas(1); cas <= t; ++cas) solve(cas);
     return 0;
 }
 
+inline int calc (multiset <int> s) {
+    int ans = 0;
+    while (1) {
+        if (s.empty()) break;
+        int x = *(s.rbegin()); s.erase(s.find(x));
+        if (s.empty() || (*(s.rbegin())) + x < checking) break;
+        while ((*(s.begin())) + x < checking) s.erase(s.begin());
+        s.erase(s.find(*(s.begin())));
+        ans++;
+    }
+    return ans;
+}
+inline int dfs (int x, int fa) {
+    multiset <int> ans;
+    vector <int> cp;
+    for (int i = head[x]; i; i = lst[i]) 
+        if (to[i] ^ fa)
+            ans.insert(dfs (to[i], x) + w[i]);
+    while (ans.size() && (*(ans.rbegin())) >= checking) {
+        ans.erase(ans.find(*(ans.rbegin()))); cnt++;
+    }
+    for (auto i : ans) cp.push_back(i);
+    int tag(calc (ans)), l(0), r(ans.size() - 1), Ans(-1);
+    cnt += tag;
+    while (l <= r) {
+        int mid((l + r) >> 1);
+        ans.erase(ans.find(cp[mid]));
+
+        if (calc(ans) ^ tag) {
+            r = mid - 1;
+        } else {
+            l = mid + 1;
+            Ans = mid;
+        }
+
+        ans.insert(cp[mid]);
+    }
+    if (Ans ^ -1) return cp[Ans];
+    else return 0;
+}
 
 void solve(int cas) {
-    cin >> n;
-    for (int i = 1; i <= n; ++i) {
-        cin >> x[i] >> y[i];
-        vis[{x[i], y[i]}] = 1;
+    cin >> n >> m;
+    for (int i(1); i < n; ++i) {
+        int x, y, z;
+        cin >> x >> y >> z;
+        add (x, y, z);
+        add (y, x, z);
     }
-    queue <pair <int, int>> q;
-    for (int i = 1; i <= n; ++i) {
-        for (auto [dx, dy] : directions) {
-            if (!vis[{x[i] + dx, y[i] + dy}]) {
-                ans[{x[i] + dx, y[i] + dy}] = {x[i] + dx, y[i] + dy};
-                q.push({x[i] + dx, y[i] + dy});
-                break;
-            }
+    int l = 1, r = 5e8;
+    while (l <= r) {
+        int mid = (l + r) >> 1;
+        checking = mid, cnt = 0; dfs (1, 0);
+        if (cnt >= m) {
+            ans = mid;
+            l = mid + 1;
+        } else {
+            r = mid - 1;
         }
     }
-    while (q.size()) {
-        pair <int, int> now = q.front(); q.pop();
-        for (auto [dx, dy] : directions) {
-            if (vis[{now.first + dx, now.second + dy}]) {
-                vis[{now.first + dx, now.second + dy}] = 0;
-                ans[{now.first + dx, now.second + dy}] = ans[{now.first, now.second}];
-                q.push({now.first + dx, now.second + dy});
-            }
-        }
-    }
-    for (int i = 1; i <= n; i++) {
-        cout << ans[{x[i], y[i]}];
-    }
+    cout << ans << endl;
 }
-// Start Time = 06:16 AM
+// Start Time = 01:40 PM
 // End Time =  
 // Submit Times =  
