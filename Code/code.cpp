@@ -1,12 +1,13 @@
 // @Author: @qmwneb 
 // @Language: C++14 
 // @Date: Tue 11/26/2024 
-// @Time: 12:57 AM
+// @Time: 06:16 AM
 #include <bits/stdc++.h>
+#pragma GCC optimize("Ofast")
 #define int long long
 using namespace std;
 
-const int N = 1e7 + 10;
+const int N = 2e5 + 10;
 const int M = 1e3 + 10;
 const int Lg = 30;
 const int mod1 = 1e9 + 7;
@@ -247,10 +248,13 @@ struct Writer {
 #define endl FastIO::Fastio::endl
 
 #define mutil false
-int t = 1, id;
-int n, m, ans;
-int a[N], b[N];
+vector<pair<int, int>> directions = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
 
+int t = 1, id;
+int n, m;
+int x[N], y[N];
+map <pair <int, int>, pair <int, int>> ans;
+map <pair <int, int>, bool> vis;
 void solve(int cas);
 
 signed main() {
@@ -264,26 +268,35 @@ signed main() {
 
 
 void solve(int cas) {
-    cin >> n; cin >> id;
-    for (int i = 1; i <= n; i++) cin >> a[i];
-    cin >> m; cin >> id;
-    for (int i = 1; i <= m; i++) cin >> b[i];
-    unordered_map <int, int> cnt;
-    for (int i = 1; i <= n; i++) cnt[a[i]]++;
-    for (int i = 1; i <= m; i++) cnt[b[i]]++;
-    for (auto i : cnt) {
-        ans = max(ans, i.second);
+    cin >> n;
+    for (int i = 1; i <= n; ++i) {
+        cin >> x[i] >> y[i];
+        vis[{x[i], y[i]}] = 1;
     }
-    for (int t = 1; t <= 2e9; t *= 2) {
-        unordered_map <int, int> cnt;
-        for (int i = 1; i <= n; i++) cnt[a[i] % (t * 2)]++;
-        for (int i = 1; i <= m; i++) cnt[(b[i] + t) % (t * 2)]++;
-        for (auto i : cnt) {
-            ans = max(ans, i.second);
+    queue <pair <int, int>> q;
+    for (int i = 1; i <= n; ++i) {
+        for (auto [dx, dy] : directions) {
+            if (!vis[{x[i] + dx, y[i] + dy}]) {
+                ans[{x[i] + dx, y[i] + dy}] = {x[i] + dx, y[i] + dy};
+                q.push({x[i] + dx, y[i] + dy});
+                break;
+            }
         }
     }
-    cout << ans << '\n';
+    while (q.size()) {
+        pair <int, int> now = q.front(); q.pop();
+        for (auto [dx, dy] : directions) {
+            if (vis[{now.first + dx, now.second + dy}]) {
+                vis[{now.first + dx, now.second + dy}] = 0;
+                ans[{now.first + dx, now.second + dy}] = ans[{now.first, now.second}];
+                q.push({now.first + dx, now.second + dy});
+            }
+        }
+    }
+    for (int i = 1; i <= n; i++) {
+        cout << ans[{x[i], y[i]}];
+    }
 }
-// Start Time = 12:57 AM
+// Start Time = 06:16 AM
 // End Time =  
 // Submit Times =  
