@@ -1,12 +1,12 @@
 // @Author: @qmwneb 
 // @Language: C++14 
-// @Date: Mon 11/25/2024 
-// @Time: 02:00 PM
+// @Date: Tue 11/26/2024 
+// @Time: 12:57 AM
 #include <bits/stdc++.h>
 #define int long long
 using namespace std;
 
-const int N = 5e5 + 1000;
+const int N = 1e7 + 10;
 const int M = 1e3 + 10;
 const int Lg = 30;
 const int mod1 = 1e9 + 7;
@@ -249,7 +249,7 @@ struct Writer {
 #define mutil false
 int t = 1, id;
 int n, m, ans;
-int arr[N];
+int a[N], b[N];
 
 void solve(int cas);
 
@@ -262,24 +262,28 @@ signed main() {
     return 0;
 }
 
-int a, b, T, k;
-
-int dp[2][N]; // a - b + 100000
 
 void solve(int cas) {
-    cin >> a >> b >> k >> T;
-    for (int i = a - b + 250000; i <= 500000; i++) dp[0][i] = 1;
-    for (int i = 1; i <= T * 2; i++) {
-        for (int j = 0; j <= 500000; j++) dp[i & 1][j] = 0; // 清零
-        for (int j = 0; j <= 500000; j++) {
-            int l = max(0ll, j - k), r = min(500000ll, j + k);
-            int val = (dp[(i + 1) & 1][r] - (l == 0 ? 0 : dp[(i + 1) & 1][l - 1]) + mod1) % mod1;
-            dp[i & 1][j] += val;
-        }
-        for (int j = 1; j <= 500000; j++) (dp[i & 1][j] += dp[i & 1][j - 1]) %= mod1;
+    cin >> n; cin >> id;
+    for (int i = 1; i <= n; i++) cin >> a[i];
+    cin >> m; cin >> id;
+    for (int i = 1; i <= m; i++) cin >> b[i];
+    unordered_map <int, int> cnt;
+    for (int i = 1; i <= n; i++) cnt[a[i]]++;
+    for (int i = 1; i <= m; i++) cnt[b[i]]++;
+    for (auto i : cnt) {
+        ans = max(ans, i.second);
     }
-    cout << (dp[0][500000] - dp[0][250000] + mod1) % mod1 << '\n';
+    for (int t = 1; t <= 2e9; t *= 2) {
+        unordered_map <int, int> cnt;
+        for (int i = 1; i <= n; i++) cnt[a[i] % (t * 2)]++;
+        for (int i = 1; i <= m; i++) cnt[(b[i] + t) % (t * 2)]++;
+        for (auto i : cnt) {
+            ans = max(ans, i.second);
+        }
+    }
+    cout << ans << '\n';
 }
-// Start Time = 02:00 PM
+// Start Time = 12:57 AM
 // End Time =  
 // Submit Times =  
