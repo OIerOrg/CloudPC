@@ -3,7 +3,7 @@ name: Setup Cpolar on Windows
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 */3 * * *'  # This runs every 3 hours
+    - cron: '0 */4 * * *'  # This runs every 3 hours
 
 jobs:
   setup-cpolar:
@@ -33,12 +33,188 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           Start-Process -NoNewWindow -FilePath "E:\cpolar\cpolar.exe" -ArgumentList "tcp 3389"
-          Start-Sleep -Seconds 3600
-          Start-Sleep -Seconds 3600
-          Start-Sleep -Seconds 3600
-          Start-Sleep -Seconds 3600
-          Start-Sleep -Seconds 3600
-          Start-Sleep -Seconds 3500
+          Start-Sleep -Seconds 600
+          git pull -f
+          git add .
+          git commit -m "Automated commit by GitHub Actions" || echo "No changes to commit"
+          git push origin main
+          Start-Sleep -Seconds 600
+          git pull -f
+          git add .
+          git commit -m "Automated commit by GitHub Actions" || echo "No changes to commit"
+          git push origin main
+          Start-Sleep -Seconds 600
+          git pull -f
+          git add .
+          git commit -m "Automated commit by GitHub Actions" || echo "No changes to commit"
+          git push origin main
+          Start-Sleep -Seconds 600
+          git pull -f
+          git add .
+          git commit -m "Automated commit by GitHub Actions" || echo "No changes to commit"
+          git push origin main
+          Start-Sleep -Seconds 600
+          git pull -f
+          git add .
+          git commit -m "Automated commit by GitHub Actions" || echo "No changes to commit"
+          git push origin main
+          Start-Sleep -Seconds 600
+          git pull -f
+          git add .
+          git commit -m "Automated commit by GitHub Actions" || echo "No changes to commit"
+          git push origin main
+          Start-Sleep -Seconds 600
+          git pull -f
+          git add .
+          git commit -m "Automated commit by GitHub Actions" || echo "No changes to commit"
+          git push origin main
+          Start-Sleep -Seconds 600
+          git pull -f
+          git add .
+          git commit -m "Automated commit by GitHub Actions" || echo "No changes to commit"
+          git push origin main
+          Start-Sleep -Seconds 600
+          git pull -f
+          git add .
+          git commit -m "Automated commit by GitHub Actions" || echo "No changes to commit"
+          git push origin main
+          Start-Sleep -Seconds 600
+          git pull -f
+          git add .
+          git commit -m "Automated commit by GitHub Actions" || echo "No changes to commit"
+          git push origin main
+          Start-Sleep -Seconds 600
+          git pull -f
+          git add .
+          git commit -m "Automated commit by GitHub Actions" || echo "No changes to commit"
+          git push origin main
+          Start-Sleep -Seconds 600
+          git pull -f
+          git add .
+          git commit -m "Automated commit by GitHub Actions" || echo "No changes to commit"
+          git push origin main
+          Start-Sleep -Seconds 600
+          git pull -f
+          git add .
+          git commit -m "Automated commit by GitHub Actions" || echo "No changes to commit"
+          git push origin main
+          Start-Sleep -Seconds 600
+          git pull -f
+          git add .
+          git commit -m "Automated commit by GitHub Actions" || echo "No changes to commit"
+          git push origin main
+          Start-Sleep -Seconds 600
+          git pull -f
+          git add .
+          git commit -m "Automated commit by GitHub Actions" || echo "No changes to commit"
+          git push origin main
+          Start-Sleep -Seconds 600
+          git pull -f
+          git add .
+          git commit -m "Automated commit by GitHub Actions" || echo "No changes to commit"
+          git push origin main
+          Start-Sleep -Seconds 600
+          git pull -f
+          git add .
+          git commit -m "Automated commit by GitHub Actions" || echo "No changes to commit"
+          git push origin main
+          Start-Sleep -Seconds 600
+          git pull -f
+          git add .
+          git commit -m "Automated commit by GitHub Actions" || echo "No changes to commit"
+          git push origin main
+          Start-Sleep -Seconds 600
+          git pull -f
+          git add .
+          git commit -m "Automated commit by GitHub Actions" || echo "No changes to commit"
+          git push origin main
+          Start-Sleep -Seconds 600
+          git pull -f
+          git add .
+          git commit -m "Automated commit by GitHub Actions" || echo "No changes to commit"
+          git push origin main
+          Start-Sleep -Seconds 600
+          git pull -f
+          git add .
+          git commit -m "Automated commit by GitHub Actions" || echo "No changes to commit"
+          git push origin main
+          Start-Sleep -Seconds 600
+          git pull -f
+          git add .
+          git commit -m "Automated commit by GitHub Actions" || echo "No changes to commit"
+          git push origin main
+          Start-Sleep -Seconds 600
+          git pull -f
+          git add .
+          git commit -m "Automated commit by GitHub Actions" || echo "No changes to commit"
+          git push origin main
+          Start-Sleep -Seconds 600
+          git pull -f
+          git add .
+          git commit -m "Automated commit by GitHub Actions" || echo "No changes to commit"
+          git push origin main
+          Start-Sleep -Seconds 600
+          git pull -f
+          git add .
+          git commit -m "Automated commit by GitHub Actions" || echo "No changes to commit"
+          git push origin main
+          Start-Sleep -Seconds 600
+          git pull -f
+          git add .
+          git commit -m "Automated commit by GitHub Actions" || echo "No changes to commit"
+          git push origin main
+          Start-Sleep -Seconds 600
+          git pull -f
+          git add .
+          git commit -m "Automated commit by GitHub Actions" || echo "No changes to commit"
+          git push origin main
+          Start-Sleep -Seconds 600
+          git pull -f
+          git add .
+          git commit -m "Automated commit by GitHub Actions" || echo "No changes to commit"
+          git push origin main
+          Start-Sleep -Seconds 600
+          git pull -f
+          git add .
+          git commit -m "Automated commit by GitHub Actions" || echo "No changes to commit"
+          git push origin main
+          Start-Sleep -Seconds 600
+          git pull -f
+          git add .
+          git commit -m "Automated commit by GitHub Actions" || echo "No changes to commit"
+          git push origin main
+          Start-Sleep -Seconds 600
+          git pull -f
+          git add .
+          git commit -m "Automated commit by GitHub Actions" || echo "No changes to commit"
+          git push origin main
+          Start-Sleep -Seconds 600
+          git pull -f
+          git add .
+          git commit -m "Automated commit by GitHub Actions" || echo "No changes to commit"
+          git push origin main
+          Start-Sleep -Seconds 600
+          git pull -f
+          git add .
+          git commit -m "Automated commit by GitHub Actions" || echo "No changes to commit"
+          git push origin main
+          Start-Sleep -Seconds 600
+          git pull -f
+          git add .
+          git commit -m "Automated commit by GitHub Actions" || echo "No changes to commit"
+          git push origin main
+          Start-Sleep -Seconds 600
+          git pull -f
+          git add .
+          git commit -m "Automated commit by GitHub Actions" || echo "No changes to commit"
+          git push origin main
+          Start-Sleep -Seconds 600
+          git pull -f
+          git add .
+          git commit -m "Automated commit by GitHub Actions" || echo "No changes to commit"
+          git push origin main
+          Start-Sleep -Seconds 600
+          
         shell: powershell
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
