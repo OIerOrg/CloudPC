@@ -3,7 +3,7 @@
 using namespace std;
 
 const int N = 1e7 + 10;
-const int M = 1e3 + 10;
+const int M = 5e3 + 10;
 const int Lg = 30;
 const int mod1 = 1e9 + 7;
 const int mod9 = 998244353;
