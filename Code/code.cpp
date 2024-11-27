@@ -1,14 +1,16 @@
 // @Author: @qmwneb 
 // @Language: C++14 
 // @Date: Wed 11/27/2024 
-<<<<<<< HEAD
-// @Time: 11:21 AM
-=======
-// @Time: 10:08 AM
->>>>>>> 38f6730e073f083b09437bf72a5ae48391aa9c70
+// @Time: 12:09 PM
 #include <bits/stdc++.h>
 #define int long long
 using namespace std;
+
+using i64 = long long;
+using u64 = unsigned long long;
+using u32 = unsigned;
+using u128 = unsigned __int128;
+using db = long double;
 
 const int N = 1e7 + 10;
 const int M = 5e3 + 10;
@@ -250,13 +252,10 @@ struct Writer {
 #define cout FastIO::Fastio::cout
 #define endl FastIO::Fastio::endl
 
-#define multi false
+#define multi true
 int t = 1, id;
 int n, m, ans;
-<<<<<<< HEAD
 int arr[N];
-=======
->>>>>>> 38f6730e073f083b09437bf72a5ae48391aa9c70
 
 void solve(int cas);
 
@@ -271,16 +270,26 @@ signed main() {
 
 
 void solve(int cas) {
-<<<<<<< HEAD
-    
+    cin >> n;
+    vector<i64> v(n);
+    for (auto& e : v) cin >> e;
+    int k = accumulate(v.begin(), v.end(), 0ll) / n;
+    vector<int> b(n), ans(n, 0);
+    int lf = n - k;
+    for (int i = lf; i < n; i++) b[i] = n - 1;
+    for (int i = n - 1; i >= 0 && lf <= i; i--) {
+        int cur = v[i] - (b[i] - i);
+        if (cur == i + 1)
+            ans[i] = 1;
+        else if (cur == 1) {
+            ans[i] = 0;
+            lf--;
+            b[lf] = i - 1;
+        }
+    }
+    for (auto& e : ans) cout << e << " ";
+    cout << endl;
 }
-// Start Time = 11:21 AM
-=======
-    int x;
-    cin >> x;
-    cout << x * (x - 1) * (x - 2) * (x - 3) * (x - 4) / 120 * x * (x - 1) * (x - 2) * (x - 3) * (x - 4) ;
-}
-// Start Time = 10:08 AM
->>>>>>> 38f6730e073f083b09437bf72a5ae48391aa9c70
+// Start Time = 12:09 PM
 // End Time =  
 // Submit Times =  
