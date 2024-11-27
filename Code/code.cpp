@@ -1,7 +1,11 @@
 // @Author: @qmwneb 
 // @Language: C++14 
 // @Date: Wed 11/27/2024 
+<<<<<<< HEAD
 // @Time: 11:21 AM
+=======
+// @Time: 10:08 AM
+>>>>>>> 38f6730e073f083b09437bf72a5ae48391aa9c70
 #include <bits/stdc++.h>
 #define int long long
 using namespace std;
@@ -249,7 +253,10 @@ struct Writer {
 #define multi false
 int t = 1, id;
 int n, m, ans;
+<<<<<<< HEAD
 int arr[N];
+=======
+>>>>>>> 38f6730e073f083b09437bf72a5ae48391aa9c70
 
 void solve(int cas);
 
@@ -264,8 +271,16 @@ signed main() {
 
 
 void solve(int cas) {
+<<<<<<< HEAD
     
 }
 // Start Time = 11:21 AM
+=======
+    int x;
+    cin >> x;
+    cout << x * (x - 1) * (x - 2) * (x - 3) * (x - 4) / 120 * x * (x - 1) * (x - 2) * (x - 3) * (x - 4) ;
+}
+// Start Time = 10:08 AM
+>>>>>>> 38f6730e073f083b09437bf72a5ae48391aa9c70
 // End Time =  
 // Submit Times =  
