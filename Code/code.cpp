@@ -248,8 +248,9 @@ struct Writer {
 
 #define multi true
 int t = 1, id;
-int n, m, ans, lcm;
+int n, m, ans, LCM;
 int arr[N];
+map <int, bool> vis;
 
 void solve(int cas);
 
@@ -262,17 +263,42 @@ signed main() {
     return 0;
 }
 
+int check (int x) {
+    int LCM = 1, ret = 0;
+    for (int i = 1; i <= n; i++) {
+        if (x % arr[i] == 0) {
+            LCM = LCM * arr[i] / __gcd(LCM, arr[i]);
+            ret++;
+        }
+    }
+    if (x == LCM) return ret;
+    return 0;
+}
 
 void solve(int cas) {
-    cin >> n; for (int i = 1; i <= n; i++) cin >> arr[i];
-    lcm = a[1]; for (int i = 1; i <= n; i++) {
-        if (lcm > 1e9) {
+    cin >> n; vis.clear(); ans = 0;
+    for (int i = 1; i <= n; i++) cin >> arr[i], vis[arr[i]] = 1;
+    LCM = arr[1]; for (int i = 1; i <= n; i++) {
+        if (LCM > 1e9) {
             cout << n << '\n';
             return;
         }
-        lcm = lcm * arr[i] / __gcd(lcm, arr[i]);
+        LCM = LCM * arr[i] / __gcd(LCM, arr[i]);
     }
-    
+    if (!vis[LCM]) {
+        cout << n << endl;
+        return;
+    }
+    for (int i = 1; i * i <= LCM; i++) {
+        if (LCM % i == 0 && !vis[i]) {
+            ans = max(ans, check(i));
+        }
+        if (LCM % i == 0 && !vis[LCM / i]) {
+            ans = max(ans, check(LCM / i));
+        }
+    }
+    cout << ans << endl;
+    return;
 }
 // Start Time = 01:10 AM
 // End Time =  
