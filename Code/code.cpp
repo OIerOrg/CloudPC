@@ -1,7 +1,7 @@
 // @Author: @qmwneb 
 // @Language: C++14 
 // @Date: Wed 11/27/2024 
-// @Time: 01:10 AM
+// @Time: 10:08 AM
 #include <bits/stdc++.h>
 #define int long long
 using namespace std;
@@ -246,11 +246,9 @@ struct Writer {
 #define cout FastIO::Fastio::cout
 #define endl FastIO::Fastio::endl
 
-#define multi true
+#define multi false
 int t = 1, id;
-int n, m, ans, LCM;
-int arr[N];
-map <int, bool> vis;
+int n, m, ans;
 
 void solve(int cas);
 
@@ -263,43 +261,12 @@ signed main() {
     return 0;
 }
 
-int check (int x) {
-    int LCM = 1, ret = 0;
-    for (int i = 1; i <= n; i++) {
-        if (x % arr[i] == 0) {
-            LCM = LCM * arr[i] / __gcd(LCM, arr[i]);
-            ret++;
-        }
-    }
-    if (x == LCM) return ret;
-    return 0;
-}
 
 void solve(int cas) {
-    cin >> n; vis.clear(); ans = 0;
-    for (int i = 1; i <= n; i++) cin >> arr[i], vis[arr[i]] = 1;
-    LCM = arr[1]; for (int i = 1; i <= n; i++) {
-        if (LCM > 1e9) {
-            cout << n << '\n';
-            return;
-        }
-        LCM = LCM * arr[i] / __gcd(LCM, arr[i]);
-    }
-    if (!vis[LCM]) {
-        cout << n << endl;
-        return;
-    }
-    for (int i = 1; i * i <= LCM; i++) {
-        if (LCM % i == 0 && !vis[i]) {
-            ans = max(ans, check(i));
-        }
-        if (LCM % i == 0 && !vis[LCM / i]) {
-            ans = max(ans, check(LCM / i));
-        }
-    }
-    cout << ans << endl;
-    return;
+    int x;
+    cin >> x;
+    cout << x * (x - 1) * (x - 2) * (x - 3) * (x - 4) / 120 * x * (x - 1) * (x - 2) * (x - 3) * (x - 4) ;
 }
-// Start Time = 01:10 AM
+// Start Time = 10:08 AM
 // End Time =  
 // Submit Times =  
